@@ -1,6 +1,6 @@
 ---
 - name: restart node
-  service: name={{ openshift.common.service_type }}-node state=restarted
+  service: name={{ openshift.common.service_type }}-node enabled=no state=stopped
 
 - name: restart docker
-  service: name=docker state=restarted
+  service: name=docker enabled=no state=stopped
