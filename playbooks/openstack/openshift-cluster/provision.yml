@@ -43,7 +43,7 @@
     - openshift_openstack_external_nsupdate_keys is defined
     - openshift_openstack_external_nsupdate_keys.private is defined or openshift_openstack_external_nsupdate_keys.public is defined
 
-- name: Prepare the Nodes in the cluster for installation
+- name: Configure Subscriptions and Package Repositories
   hosts: oo_all_hosts
   become: yes
   gather_facts: yes
@@ -59,10 +59,17 @@
   - name: Enable required YUM repositories
     include_role:
       name: openshift_repos
-    #when:
-    #- ansible_distribution == "RedHat"
-    #- rh_subscribed is defined
 
+- name: Configure os_firewall
+  hosts: oo_masters_to_config:oo_etcd_to_config:oo_lb_to_config:oo_nfs_to_config:oo_nodes_to_config
+  roles:
+  - role: os_firewall
+
+- name: Prepare the Nodes in the cluster for installation
+  hosts: oo_all_hosts
+  become: yes
+  gather_facts: yes
+  tasks:      
   - name: Install dependencies
     include_role:
       name: openshift_openstack
