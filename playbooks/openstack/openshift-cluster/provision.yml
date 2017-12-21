@@ -59,9 +59,9 @@
   - name: Enable required YUM repositories
     include_role:
       name: openshift_repos
-    when:
-    - ansible_distribution == "RedHat"
-    - rh_subscribed is defined
+    #when:
+    #- ansible_distribution == "RedHat"
+    #- rh_subscribed is defined
 
   - name: Install dependencies
     include_role:
